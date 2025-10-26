@@ -125,7 +125,7 @@ This project uses environment variables for configuration. Before running the ap
 2. **Installation:**
    ```sh
    # Clone the PHP backend repository
-   git clone <php-backend-repo-url>
+   git clone [php-backend](https://github.com/MamaboloGtub/leads-management-php.git)
    cd leads-management-php
    
    # Install dependencies
@@ -154,7 +154,7 @@ This project uses environment variables for configuration. Before running the ap
 2. **Installation:**
    ```sh
    # Clone the Spring WebFlux backend repository
-   git clone <spring-webflux-repo-url>
+   git clone [spring-webflux](https://github.com/MamaboloGtub/leads-management-system.git)
    cd leads-management-webflux
    
    # Install dependencies and build
