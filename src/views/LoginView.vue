@@ -13,7 +13,6 @@
           <v-form v-model="valid" ref="form" @submit.prevent="login">
             <v-text-field
               v-model="email"
-              :rules="emailRules"
               label="Email"
               type="email"
               required
@@ -68,17 +67,17 @@ const password = ref('')
 const showPassword = ref(false)
 const form = ref(null)
 
-const emailRules = [
-  value => {
-    if (value) return true
-    return 'Email is required'
-  },
-  value => {
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (pattern.test(value)) return true
-    return 'Invalid email format'
-  }
-]
+// const emailRules = [
+//   value => {
+//     if (value) return true
+//     return 'Email is required'
+//   },
+//   value => {
+//     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+//     if (pattern.test(value)) return true
+//     return 'Invalid email format'
+//   }
+// ]
 
 const passwordRules = [
   value => {

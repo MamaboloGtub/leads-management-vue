@@ -25,6 +25,35 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 npm install
 ```
 
+## Environment Configuration
+
+This project uses environment variables for configuration. Before running the application:
+
+1. Copy the example environment file:
+   ```sh
+   copy .env.example .env
+   ```
+
+2. Update the `.env` file with your specific configuration:
+   ```env
+   # API Configuration
+   VITE_API_BASE_URL=http://localhost:8888/api
+   
+   # App Configuration
+   VITE_APP_NAME=Leads Management System
+   VITE_APP_VERSION=1.0.0
+   
+   # Development Features
+   VITE_DEBUG_MODE=true
+   ```
+
+### Available Environment Variables
+
+- `VITE_API_BASE_URL`: Base URL for your API endpoints
+- `VITE_APP_NAME`: Application name displayed in the UI
+- `VITE_APP_VERSION`: Application version
+- `VITE_DEBUG_MODE`: Enable/disable debug features
+
 ### Compile and Hot-Reload for Development
 
 ```sh

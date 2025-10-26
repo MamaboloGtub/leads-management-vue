@@ -92,10 +92,10 @@ const currentDateFilter = ref(null);
 const headers = [
   { title: 'Lead Name', value: 'name', sortable: true },
   { title: 'Lead Contact', value: 'email' },
-  { title: 'Lead Source', value: 'lead_source' },
-  { title: 'Lead Status', value: 'lead_status' },
-  { title: 'Date Created', value: 'created_at' },
-  { title: 'Date Updated', value: 'updated_at' },
+  { title: 'Lead Source', value: 'leadSource' },
+  { title: 'Lead Status', value: 'leadStatus' },
+  { title: 'Date Created', value: 'createdAt' },
+  { title: 'Date Updated', value: 'updatedAt' },
   { title: 'Actions', value: 'actions', sortable: false },
 ]
 onMounted(async () => {

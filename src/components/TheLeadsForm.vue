@@ -142,8 +142,8 @@ watch(() => props.leadData, (newData) => {
   if (newData && props.isEdit) {
     name.value = newData.name || '';
     email.value = newData.email || '';
-    leadSource.value = newData.lead_source || '';
-    leadStatus.value = newData.lead_status || '';
+    leadSource.value = newData.lead_source || newData.leadSource || '';
+    leadStatus.value = newData.lead_status || newData.leadStatus || '';
   }
 }, { immediate: true })
 
@@ -205,6 +205,7 @@ const submit = async () => {
           emit('save-complete');
         }, 1500);
       } else {
+        await leadStore.createLead(formData);
         successMessage.value = 'Lead created successfully!';
 
         setTimeout(() => {

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-
+import config from '@/config';
+const API_URL = config.apiPHPBaseUrl;
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('authToken') || null,
@@ -26,20 +27,18 @@ export const useAuthStore = defineStore('auth', {
 
       try {
         console.log('Attempting login with:', credentials);
-        const response = await axios.post('http://localhost:8888/api/auth/login', credentials);
+        const response = await axios.post(`${API_URL}/auth/login`, credentials);
         this.token = response.data.token
-        this.user = response.data.user
+        this.user = response.data.user || { email: credentials.email } // Handle missing user object
         localStorage.setItem('authToken', this.token)
         axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
         console.log('Login successful:', response.data);
 
-        // Clear any previous failure reasons on successful login
         this.loginFailureReason = null
       } catch (error) {
         const errorMessage = error.response?.data?.message || 'Login failed'
         this.error = errorMessage
 
-        // Determine failure reason based on error response
         if (error.response?.status === 401) {
           if (errorMessage.toLowerCase().includes('account not found') ||
               errorMessage.toLowerCase().includes('user not found')) {
@@ -79,7 +78,6 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
     },
 
-    // Initialize auth state from localStorage
     initializeAuth() {
       const token = localStorage.getItem('authToken')
       if (token) {

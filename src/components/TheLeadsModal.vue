@@ -26,18 +26,18 @@
           </v-row>
           <v-row>
             <v-col cols="6">
-              <strong>Lead Source:</strong> {{ leadData?.lead_source || 'N/A' }}
+              <strong>Lead Source:</strong> {{ leadData?.leadSource || 'N/A' }}
             </v-col>
             <v-col cols="6">
-              <strong>Lead Status:</strong> {{ leadData?.lead_status || 'N/A' }}
+              <strong>Lead Status:</strong> {{ leadData?.leadStatus || 'N/A' }}
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="6">
-              <strong>Created:</strong> {{ formatDate(leadData?.created_at) || 'N/A' }}
+              <strong>Created:</strong> {{ formatDate(leadData?.createdAt) || 'N/A' }}
             </v-col>
             <v-col cols="6">
-              <strong>Updated:</strong> {{ formatDate(leadData?.updated_at) || 'N/A' }}
+              <strong>Updated:</strong> {{ formatDate(leadData?.updatedAt) || 'N/A' }}
             </v-col>
           </v-row>
         </div>

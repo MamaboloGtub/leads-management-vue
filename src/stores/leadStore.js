@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import config from "@/config";
+const API_URL = config.apiPHPBaseUrl;
 
 export const useLeadStore = defineStore("lead", {
   state: () => ({
@@ -32,8 +34,7 @@ export const useLeadStore = defineStore("lead", {
       this.isLoading = true;
       this.error = null;
       try {
-        console.log("Fetching leads with filter:", filter);
-        const response = await axios.get('http://localhost:8888/api/leads', {
+        const response = await axios.get(`${API_URL}/leads`, {
           params: filter,
           headers: this.getAuthHeaders()
         });
@@ -70,23 +71,25 @@ export const useLeadStore = defineStore("lead", {
        this.isLoading = true;
       this.error = null;
       try {
-        console.log('Creating lead:', leadData);
-        const response = await axios.post('http://localhost:8888/api/leads', leadData, {
+        const response = await axios.post(`${API_URL}/leads`, leadData, {
           headers: this.getAuthHeaders()
         });
+        console.log('Create lead response:', response);
         if (!Array.isArray(this.leads)) {
           this.leads = [];
         }
 
         const leadResponse = response.data.data || response.data;
-        this.leads.unshift(leadResponse);
-        console.log('Lead created successfully:', leadResponse);
-        return leadResponse;
+
+        if (leadResponse && typeof leadResponse === 'object' && (leadResponse.id || leadResponse.name)) {
+          this.leads.unshift(leadResponse);
+          return leadResponse;
+        } else {
+          await this.fetchLeads();
+          return true;
+        }
       } catch (error) {
         let errorMessage = 'Failed to create lead';
-        console.log('Full error object:', error);
-        console.log('Error response:', error.response);
-        console.log('Error response data:', error.response?.data);
 
         if (error.response?.data?.message) {
           errorMessage = error.response.data.message;
@@ -108,8 +111,7 @@ export const useLeadStore = defineStore("lead", {
        this.isLoading = true;
       this.error = null;
       try {
-        console.log('Updating lead ID:', id, 'with data:', leadData);
-        const response = await axios.put(`http://localhost:8888/api/leads/${id}`, leadData, {
+        const response = await axios.put(`${API_URL}/leads/${id}`, leadData, {
           headers: this.getAuthHeaders()
         });
 
@@ -125,13 +127,9 @@ export const useLeadStore = defineStore("lead", {
         if (this.selectedLead && this.selectedLead.id === id) {
           this.selectedLead = leadResponse;
         }
-        console.log('Lead updated successfully:', leadResponse);
         return leadResponse;
       } catch (error) {
         let errorMessage = 'Failed to update lead';
-        console.log('Full error object:', error);
-        console.log('Error response:', error.response);
-        console.log('Error response data:', error.response?.data);
 
         if (error.response?.data?.message) {
           errorMessage = error.response.data.message;
@@ -153,8 +151,7 @@ export const useLeadStore = defineStore("lead", {
         this.isLoading = true;
       this.error = null;
       try {
-        console.log('Deleting lead ID:', id);
-        await axios.delete(`http://localhost:8888/api/leads/${id}`, {
+        await axios.delete(`${API_URL}/leads/${id}`, {
           headers: this.getAuthHeaders()
         });
 
@@ -165,7 +162,6 @@ export const useLeadStore = defineStore("lead", {
         if (this.selectedLead && this.selectedLead.id === id) {
           this.selectedLead = null;
         }
-        console.log('Lead deleted successfully');
         return true;
       } catch (error) {
         this.error = error.response?.data?.message || 'Failed to delete lead';
